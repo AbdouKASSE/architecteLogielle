@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div fragment="content">
+
+    <div class="col-md-6 offset-3">
+        <form method="post" th:action="@{/saveUe}" class="">
+
+            <div>
+                <label>Code : </label>
+                <input class="form-control" type="text" name="nom" th:value="${ues.code}" />
+                <span class="text-danger" th:errors="${ues.code}"></span>
+            </div>
+
+            <div>
+                <label>Libelle : </label>
+                <input class="form-control" type="text" name="prenom" th:value="${ues.libelle}" />
+                <span class="text-danger" th:errors="${ues.libelle}"></span>
+            </div>
+                <div>
+                    <label>Credit : </label>
+                    <input class="form-control" type="text" name="matricule" th:value="${ues.credit}" />
+                    <span class="text-danger" th:errors="${ues.credit}"></span>
+                </div>
+                <div>
+                    <label>Coef : </label>
+                    <input class="form-control" type="text" name="grade" th:value="${ues.coef}" />
+                    <span class="text-danger" th:errors="${ues.coef}"></span>
+                </div>
+                <div>
+                    <label>CM : </label>
+                    <input class="form-control" type="text" name="prenom" th:value="${ues.cm}" />
+                    <span class="text-danger" th:errors="${ues.cm}"></span>
+                </div>
+
+                    <div>
+                        <label>TD : </label>
+                        <input class="form-control" type="text" name="matricule" th:value="${ues.td}" />
+                        <span class="text-danger" th:errors="${ues.td}"></span>
+                    </div>
+
+                    <div>
+                        <label>TP : </label>
+                        <input class="form-control" type="text" name="grade" th:value="${ues.tp}" />
+                        <span class="text-danger" th:errors="${ues.tp}"></span>
+                    </div>
+
+                    <!--       <div>
+                               <label>Email : </label>
+                               <input class="form-control" type="email" name="email" th:value="${enseignant.email}" />
+                               <span class="text-danger" th:errors="${enseignant.email}"></span>
+                           </div>
+
+                           <div>
+                               <label>Score : </label>
+                               <input class="form-control" type="number" name="password" th:value="${enseignant.password}" />
+                               <span class="text-danger" th:errors="${enseignant.password}"></span>
+                           </div>-->
+
+                    <div><button type="submit" class="btn btn-primary">Save</button></div>
+
+        </form>
+
+    </div>
+</div>
+</body>
+</html>
