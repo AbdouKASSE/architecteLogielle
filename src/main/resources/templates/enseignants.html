@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="/webjars/jquery/3.7.1/jquery.min.css"></script>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+<div class="p=3 m=2">
+    <div class="card">
+        <a class="btn btn-success" th:href="@{/form}">Ajout Enseignant</a>
+        <div class="card-header">Liste des Enseignants</div>
+        <div class="card-body">
+            <form method="get" th:action="@{index}">
+                <label>key word</label>
+                <input type="text" name="keyword" th:value="${keyword}" class="form-control d-inline w-auto">
+                <button type="submit" class="btn btn-primary">Recherche</button>
+            </form>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th><th>NOM</th><th>PRENOM</th><th>MATRICULE</th><th>GRADE</th><th>OPERATIONS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p:${listeEnseignants}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.nom}"></td>
+                    <td th:text="${p.prenom}"></td>
+                    <td th:text="${p.matricule}"></td>
+                    <td th:text="${p.grade}"></td>
+                    <td>
+                        <a onclick="return confirm('Voulez vous réellement supprimer ?')" class="btn btn-danger"
+                           th:href="@{deleteEnseignant(id=${p.id})}">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        <a class="btn btn-success" th:href="@{editEnseignant(id=${p.id})}">
+                            <i class="bi bi-pen"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li th:each="pageNum : ${pages}" class="nav-item">
+                    <a th:classappend="${pageNum == currentPage} ? 'btn btn-primary ms-1' : 'btn btn-outline-primary ms-1'"
+                       th:text="${pageNum + 1}"
+                       th:href="@{/index(page=${pageNum}, keyword=${keyword})}">
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

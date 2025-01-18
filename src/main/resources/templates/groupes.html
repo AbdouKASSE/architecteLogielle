@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="/webjars/jquery/3.7.1/jquery.min.css"></script>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+<div class="p=3 m=2">
+    <div class="card">
+        <a class="btn btn-success" th:href="@{/formEnseignement}">Ajout Enseignement</a>
+        <div class="card-header">Liste des Enseignements</div>
+        <div class="card-body">
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th><th>NOM</th><th>NBETUDIANT</th><th>OPERATIONS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p:${listeGroupes}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.nom}"></td>
+                    <td th:text="${p.nbEtudiant}"></td>
+                    <td>
+                        <a onclick="return confirm('Voulez vous réellement supprimer ?')" class="btn btn-danger"
+                           th:href="@{deleteGroupe(id=${p.id})}">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        <a class="btn btn-success" th:href="@{editGroupe(id=${p.id})}">
+                            <i class="bi bi-pen"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
