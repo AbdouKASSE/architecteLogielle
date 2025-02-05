@@ -1,6 +1,8 @@
 package sn.uasz.demoJPA.entiries;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ public class UE {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  Long id;
+    @NotNull
+    @Size(min = 4,max = 15)
+    @Column(unique = true)
     private String code;
     private String libelle;
     private int credit;
@@ -23,10 +28,10 @@ public class UE {
     private int cm;
     private int td;
     private int tp;
-    @OneToMany(mappedBy = "ue_id",fetch =  FetchType.EAGER)
-    private List<EC> ecs = new ArrayList<>();
+    @OneToMany(mappedBy = "ueEC",fetch =  FetchType.EAGER)
+    private List<EC> ueEcs = new ArrayList<>();
     @ManyToOne
-    @JoinColumn(name = "ues")
-    private Maquette ues;
+    @JoinColumn(name = "ueMaquette")
+    private Maquette ueMaquette;
 
 }

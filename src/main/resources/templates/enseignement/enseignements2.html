@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="/webjars/jquery/3.7.1/jquery.min.css"></script>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+<div layout:fragment="content" class="p=3 m=2">
+    <div class="card">
+        <div class="card-header">Liste des Enseignements</div>
+        <div class="card-body">
+            <form method="get" th:action="@{/enseignement/user/indexEnseignement2}">
+                <label>key word</label>
+                <input type="text" name="keyword" th:value="${keyword}" class="form-control d-inline w-auto">
+                <button type="submit" class="btn btn-primary">Recherche</button>
+            </form>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th><th>CODE</th><th>LIBELLE</th><th>TYPE</th><th>CODE EC</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p:${listeEnseignements}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.code}"></td>
+                    <td th:text="${p.libelle}"></td>
+                    <td th:text="${p.type}"></td>
+                    <td th:text="${p.ecEnseignement != null ? p.ecEnseignement.code : 'Pas de EC'}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li th:each="page , status: ${pages}" class="nav-item">
+                    <a th:class ="${status.index == currentPage} ? 'btn btn-primary ms-1' : 'btn btn-outline-primary ms-1'"
+                       th:text="${status.index}"
+                       th:href="@{/enseignement/user/indexEnseignement2(page=${status.index}, keyword=${keyword})}">
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

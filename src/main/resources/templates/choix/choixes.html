@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="/webjars/jquery/3.7.1/jquery.min.css"></script>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+<div layout:fragment="content" class="p=3 m=2">
+    <div class="card">
+        <button type="button" ><a class="btn btn-success" th:href="@{/choix/user/formChoix}">Ajout Choix</a></button>
+        <div class="card-header">Liste des Choix</div>
+        <div class="card-body">
+            <form method="get" th:action="@{/choix/user/indexChoix}">
+                <label>key word</label>
+                <input type="text" name="keyword" th:value="${keyword}" class="form-control d-inline w-auto">
+                <button type="submit" class="btn btn-primary">Recherche</button>
+            </form>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th><th>Date</th><th>Type</th><th>Libelle</th><th>Nom RES</th><th>Prenom RES</th><th>Validation</th><th>OPERATIONS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p:${listeChoixes}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.date}"></td>
+                    <td th:text="${p.enseignement_id.type}"></td>
+                    <td th:text="${p.enseignement_id.libelle}"></td>
+                    <td th:text="${p.enseignants.nom}"></td>
+                    <td th:text="${p.enseignants.prenom}"></td>
+                     <td th:text="${p.validation}"></td>
+                    <td >
+                        <a onclick="return confirm('Voulez vous réellement supprimer ?')" class="btn btn-danger"
+                           th:href="@{/choix/user/deleteChoix(id=${p.id},keyword=${keyword},page=${currentPage})}">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        <a class="btn btn-success" th:href="@{/choix/user/editChoix(id=${p.id},keyword=${keyword},page=${currentPage})}">
+                            <i class="bi bi-pen"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li th:each="page , status: ${pages}" class="nav-item">
+                    <a th:class ="${status.index == currentPage} ? 'btn btn-primary ms-1' : 'btn btn-outline-primary ms-1'"
+                       th:text="${status.index}"
+                       th:href="@{/choix/user/indexChoix(page=${status.index}, keyword=${keyword})}">
+                    </a>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

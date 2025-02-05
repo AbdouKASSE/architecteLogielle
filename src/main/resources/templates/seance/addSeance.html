@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="col-md-6 offset-3">
+        <form method="post" th:action="@{/seance/admin/saveSeance(page=${page},keyword=${keyword})}" class="">
+
+            <div>
+                <label>Code : </label>
+                <input class="form-control" type="text" name="code" th:value="${seance.code}" />
+                <span class="text-danger" th:errors="${seance.code}"></span>
+            </div>
+            <div>
+                <label>Heure Debut : </label>
+                <input class="form-control" type="text" name="heureDeb" th:value="${seance.heureDeb}" />
+                <span class="text-danger" th:errors="${seance.heureDeb}"></span>
+            </div>
+            <div>
+                <label>Heure Fin : </label>
+                <input class="form-control" type="text" name="heureFin" th:value="${seance.heureFin}" />
+                <span class="text-danger" th:errors="${seance.heureFin}"></span>
+            </div>
+            <div>
+                <label>Enseignement : </label>
+                <select class="form-control" type="text" name="SeanceENG" th:value="${SeanceENG}">
+                    <option th:each="choix2 : ${enseign}"
+                            th:value="${choix2.id}"
+                            th:text="${choix2.code}">
+                    </option>
+                </select>
+            </div>
+
+            <div>
+                <label>Salle : </label>
+                <select class="form-control" type="text" name="SeanceSA" th:value="${SeanceSA}">
+                    <option th:each="choix : ${salle}"
+                            th:value="${choix.id}"
+                            th:text="${choix.nom}">
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label>Emplois DT : </label>
+                <select class="form-control" type="text" name="SeanceETP" th:value="${SeanceETP}">
+                    <option th:each="choix1 : ${empl}"
+                            th:value="${choix1.id}"
+                            th:text="${choix1.id}">
+                    </option>
+                </select>
+            </div>
+
+                    <div><button type="submit" class="btn btn-primary">Save</button></div>
+
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

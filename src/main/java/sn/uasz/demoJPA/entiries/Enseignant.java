@@ -12,9 +12,9 @@ import java.util.List;
 @Setter
 @ToString
 @DiscriminatorValue("PROF")
-public class Enseignant extends Users {
+public class Enseignant extends Userss {
     private String grade;
-    @OneToMany(mappedBy = "enseignant_id",fetch =  FetchType.EAGER)
+    @OneToMany(mappedBy = "enseignants",fetch =  FetchType.EAGER)
     private List<Choix> choix = new ArrayList<>();
 
 

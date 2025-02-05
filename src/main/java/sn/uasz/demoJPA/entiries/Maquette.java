@@ -1,6 +1,7 @@
 package sn.uasz.demoJPA.entiries;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.List;
@@ -15,11 +16,15 @@ public class Maquette {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NonNull
+    @Size(min = 4,max = 15)
+    @Column(unique = true)
     private String code;
-    @OneToMany(mappedBy = "ues")
+    private String nom;
+    @OneToMany(mappedBy = "ueMaquette")
     List<UE> ues;
     @OneToOne(cascade = CascadeType.ALL) // Relation OneToOne
-    @JoinColumn(name = "classe", referencedColumnName = "id")
-    private Classe classe;
+    @JoinColumn(name = "classeM", referencedColumnName = "id")
+    private Classe classeM;
 
 }

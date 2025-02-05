@@ -1,6 +1,7 @@
 package sn.uasz.demoJPA.entiries;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.List;
@@ -15,7 +16,11 @@ public class EC {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  Long id;
+    @NonNull
+    @Size(min = 4,max = 15)
+
     private String code;
+    @NonNull
     private String libelle;
     private int credit;
     private int coef;
@@ -23,10 +28,9 @@ public class EC {
     private int td;
     private int tp;
     @ManyToOne
-    @JoinColumn(name = "ue_id")
-    private UE ue_id;
-
-    @OneToMany(mappedBy = "ec_id")
+    @JoinColumn(name = "ueEC")
+    private UE ueEC;
+    @OneToMany(mappedBy = "ecEnseignement")
     private List<Enseignement> enseignement;
 
 }

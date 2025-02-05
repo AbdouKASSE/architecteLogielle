@@ -16,6 +16,10 @@ public class Formation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  Long id;
-    @OneToMany(mappedBy = "classe")
+    @NonNull
+    @Column(unique = true)
+    private String code;
+    private String nom;
+    @OneToMany(mappedBy = "classeFr")
     List<Classe> classes = new ArrayList<>();
 }

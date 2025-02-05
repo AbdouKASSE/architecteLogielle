@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="/webjars/jquery/3.7.1/jquery.min.css"></script>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+<div layout:fragment="content" class="p=3 m=2">
+    <div class="card">
+        <button type="button" th:if="${#authorization.expression('hasRole(''ADMIN'')')}"><a class="btn btn-success" th:href="@{/seance/admin/formSeance}">Ajout Seance</a></button>
+        <div class="card-header">Liste des Seances</div>
+        <div class="card-body">
+            <form method="get" th:action="@{/seance/user/indexSeance}">
+                <label>key word</label>
+                <input type="text" name="keyword" th:value="${keyword}" class="form-control d-inline w-auto">
+                <button type="submit" class="btn btn-primary">Recherche</button>
+            </form>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th><th>CODE</th> <th>HEURE D</th><th>HEURE F</th><th>ID Emplois</th><th>SALLE</th> <th>ENSEIGNEMENT</th> <th>OPERATIONS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p:${listeSeances}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.code}"></td>
+                    <td th:text="${p.heureDeb}"></td>
+                    <td th:text="${p.heureFin}"></td>
+                    <td th:text="${p.seanceETP != null ? p.seanceETP.id : 'Pas de Emplois DT '}"></td>
+                    <td th:text="${p.seanceSA != null ? p.seanceSA.nom : 'Pas de Salle '}"></td>
+                    <td th:text="${p.seanceENG != null ? p.seanceENG.code : 'Pas de Enseignement '}"></td>
+                    <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <a onclick="return confirm('Voulez vous réellement supprimer ?')" class="btn btn-danger"
+                           th:href="@{/seance/admin/deleteSeance(id=${p.id},keyword=${keyword},page=${currentPage})}">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        <a class="btn btn-success" th:href="@{/seance/admin/editSeance(id=${p.id},keyword=${keyword},page=${currentPage})}">
+                            <i class="bi bi-pen"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li th:each="page , status: ${pages}" class="nav-item">
+                    <a th:class ="${status.index == currentPage} ? 'btn btn-primary ms-1' : 'btn btn-outline-primary ms-1'"
+                       th:text="${status.index}"
+                       th:href="@{/seance/user/indexSeance(page=${status.index}, keyword=${keyword})}">
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

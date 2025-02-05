@@ -11,6 +11,6 @@ import lombok.*;
 @Setter
 @ToString
 @DiscriminatorValue("ETUD")
-public class Etudiant extends Users {
+public class Etudiant extends Userss {
     private String niveau;
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Patients</title>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+
+  <div class="col-md-6 offset-3">
+    <form method="post" th:action="@{/salle/admin/saveSalle(page=${page},keyword=${keyword})}" class="">
+      <div>
+        <label for="id">ID : </label>
+        <input id="id" class="form-control" type="text" name="id" th:value="${salle.id}" />
+      </div>
+
+      <div>
+        <label>Nom : </label>
+        <input class="form-control" type="text" name="nom" th:value="${salle.nom}" />
+        <span class="text-danger" th:errors="${salle.nom}"></span>
+      </div>
+
+      <div><div>
+        <label>Capacite : </label>
+        <input class="form-control" type="text" name="capacite" th:value="${salle.capacite}" />
+        <span class="text-danger" th:errors="${salle.capacite}"></span>
+      </div>
+        <div>
+          <label>Batiment : </label>
+          <input class="form-control" type="text" name="batiment" th:value="${salle.batiment}" />
+          <span class="text-danger" th:errors="${salle.batiment}"></span>
+        </div>
+
+        <div><button type="submit" class="btn btn-primary">Save</button></div>
+
+      </div>
+
+    </form>
+
+  </div>
+</div>
+</body>
+</html>

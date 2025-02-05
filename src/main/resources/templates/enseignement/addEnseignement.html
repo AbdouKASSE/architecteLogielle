@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="col-md-6 offset-3">
+        <form method="post" th:action="@{/enseignement/admin/saveEnseignement(page=${page},keyword=${keyword})}" class="">
+
+            <div>
+                <label>Code : </label>
+                <input class="form-control" type="text" name="code" th:value="${enseignement.code}" />
+                <span class="text-danger" th:errors="${enseignement.code}"></span>
+            </div>
+
+            <div>
+                <label>Libelle : </label>
+                <input class="form-control" type="text" name="libelle" th:value="${enseignement.libelle}" />
+                <span class="text-danger" th:errors="${enseignement.libelle}"></span>
+            </div>
+            <div>
+                    <label>Type : </label>
+                    <input class="form-control" type="text" name="type" th:value="${enseignement.type}" />
+                    <span class="text-danger" th:errors="${enseignement.type}"></span>
+            </div>
+            <div>
+                <select class="form-control" type="text" name="ecEnseignement" th:value="${ecEnseignement}">
+                    <option th:each="choix1 : ${ec}"
+                            th:value="${choix1.id}"
+                            th:text="${choix1.libelle}">
+                    </option>
+                </select>
+            </div>
+            <div><button type="submit" class="btn btn-primary">Save</button></div>
+
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

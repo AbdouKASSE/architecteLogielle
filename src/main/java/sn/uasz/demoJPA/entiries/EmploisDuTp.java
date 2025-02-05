@@ -1,12 +1,12 @@
 package sn.uasz.demoJPA.entiries;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -18,6 +18,13 @@ public class EmploisDuTp {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-   private LocalDate dateDeb;
-   private LocalDate dateFin;
+    @NonNull
+    @Size(min = 4,max = 8)
+    private String semestre;
+    private String annee;
+    private LocalDate dateDeb;
+    private LocalDate dateFin;
+    @OneToMany(mappedBy = "seanceETP",fetch =  FetchType.EAGER)
+    private List<Seance> seances = new ArrayList<>();
+
 }

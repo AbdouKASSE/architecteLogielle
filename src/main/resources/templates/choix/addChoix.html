@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="col-md-6 offset-3">
+        <form method="post" th:action="@{/choix/user/saveChoix(page=${page},keyword=${keyword})}" class="">
+            <div>
+                <label>Date : </label>
+                <input class="form-control" type="date" name="date" th:value="${choix.date}" />
+                <span class="text-danger" th:errors="${choix.date}"></span>
+            </div>
+            <div>
+                <select class="form-control" type="text" name="enseignants" th:value="${enseignants}">
+                    <option value=" disabled selected">-- Sélectionnez un enseignant --</option>
+                    <option th:each="choix1 : ${enseignant}"
+                            th:value="${choix1.id}"
+                            th:text="${choix1.nom}">
+                    </option>
+                </select>
+            </div>
+            <div>
+                <select class="form-control" type="text" name="enseignement_id" th:value="${enseignement_id}">
+                    <option value=" disabled selected">-- Sélectionnez un enseignement --</option>
+                    <option th:each="choix2 : ${enseignement}"
+                            th:value="${choix2.id}"
+                            th:text="${choix2.code}">
+                    </option>
+                </select>
+            </div>
+            <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                <label>Validation : </label>
+                <select class="form-control" type="text" name="validation" th:value="${choix.validation}">
+                    <option th:value="${0}" th:text="${0}"></option>
+                    <option th:value="${1}" th:text="${1}"></option>
+                </select>
+            </div>
+<!--
+                  <div>
+                       <label>Email : </label>
+                       <input class="form-control" type="email" name="email" th:value="${enseignant.email}" />
+                       <span class="text-danger" th:errors="${enseignant.email}"></span>
+                   </div>
+
+                   <div>
+                       <label>Score : </label>
+                       <input class="form-control" type="number" name="password" th:value="${enseignant.password}" />
+                       <span class="text-danger" th:errors="${enseignant.password}"></span>
+                   </div>-->
+
+            <div><button type="submit" class="btn btn-primary">Save</button></div>
+
+
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

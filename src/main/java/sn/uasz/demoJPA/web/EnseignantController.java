@@ -1,10 +1,12 @@
 package sn.uasz.demoJPA.web;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import sn.uasz.demoJPA.entiries.Enseignant;
 import sn.uasz.demoJPA.repostory.EnseignantRepostory;
@@ -18,40 +20,10 @@ import java.util.List;
 public class EnseignantController {
     @Autowired
     EnseignantRepostory enseignantRepostory;
-   /* @Autowired
-    EnseignantService enseignantService;
-    /*@PostMapping("/ajouter")
-    public Enseignant addEnsignant(@RequestBody Enseignant enseignant) {
-        // Appeler le service pour enregistrer l'utilisateur
-        return enseignantService.addEnseignant(enseignant);
-    }
-    @PostMapping("users/ajouter")
-    public String addEnsei(@ModelAttribute Enseignant enseignant, Model model) {
-        // Appeler le service pour enregistrer l'utilisateur
-        enseignantService.addEnseignant(enseignant);
 
-        // Ajouter un message de confirmation
-        model.addAttribute("message", "Utilisateur ajouté avec succès !");
-        return "confirmation"; // Rediriger vers une page de confirmation
-    }
-
-    @GetMapping("users/formulaire")
-    public String afficherFormulaire() {
-        return "formulaire"; // Nom du fichier HTML pour le formulaire
-    }
-
-    @GetMapping("users/liste")
-    public List<Enseignant> getAllEnseignant() {
-        // Retourner la liste des utilisateurs
-        return enseignantService.getAllEnseignant();
-    }
-    @GetMapping("users/{id}")
-    public Enseignant obtenirUtilisateurParId(@PathVariable Long id) {
-        return enseignantService.getById(id);
-    }*/
-    @GetMapping("/index")
+    @GetMapping("/enseignant/user/index")
     public String index(Model model ,
-                        @RequestParam(name = "pade",defaultValue = "0") int page ,
+                        @RequestParam(name = "page",defaultValue = "0") int page ,
                         @RequestParam(name = "size",defaultValue = "5") int size,
                         @RequestParam(name = "keyword",defaultValue = "") String keyword){
         Page<Enseignant> pageEnseignants=enseignantRepostory.findByPrenomContainsIgnoreCase(keyword, PageRequest.of(page,size));
@@ -59,31 +31,42 @@ public class EnseignantController {
         model.addAttribute("pages",new int[pageEnseignants.getTotalPages()]);
         model.addAttribute("currentPage",page);
         model.addAttribute("keyword",keyword);
-        return "enseignants";
+        return "/enseignant/enseignants";
 
     }
-    @RequestMapping("/editEnseignant")
-    public String editEnseignant(Model model,@RequestParam(name= "id") Long id){
+    @RequestMapping("/enseignant/admin/editEnseignant")
+    public String editEnseignant(Model model,@RequestParam(name= "id") Long id,String keyword,int page){
         Enseignant enseignant = enseignantRepostory.findById(id).orElse(null);
         if (enseignant==null) throw new RuntimeException("Enseignant introuvable");
         model.addAttribute("enseignant",enseignant);
-        return  "editFormulaire";
+        model.addAttribute("page",page);
+        model.addAttribute("keyword",keyword);
+        return  "/enseignant/editFormulaire";
     }
-    @GetMapping("/deleteEnseignant")
-    public String deleteEnseignant (@RequestParam(name = "id") Long id){
+    @GetMapping(path ="/enseignant/admin/deleteEnseignant")
+    public String deleteEnseignant (@RequestParam(name = "id") Long id,String keyword,int page){
         enseignantRepostory.deleteById(id);
-        return "redirect:/index";
+        return "redirect:/enseignant/user/index?page="+page+"&keyword="+ keyword;
     }
-    @PostMapping(path = "/save")
-    public String save( Enseignant enseignant) {
+    @PostMapping(path = "/enseignant/admin/save")
+    public String save(@Valid Enseignant enseignant, BindingResult bindingResult,
+                       @RequestParam(defaultValue = "0")int page,
+                       @RequestParam(defaultValue = "")String keyword
+                       ) {
         // Appeler le service pour enregistrer l'utilisateur
+        if (bindingResult.hasErrors()) return "/enseignant/addformulaire";
         enseignantRepostory.save(enseignant);
-        return "redirect:/index";
+        return "redirect:/enseignant/user/index?page="+page+"&keyword="+ keyword;
     }
-    @RequestMapping(value = "/form",method = RequestMethod.GET)
+    @RequestMapping(value = "/enseignant/admin/form",method = RequestMethod.GET)
     public String form (Model model){
         model.addAttribute("enseignant",new Enseignant());
-        return "addformulaire";
+        return "/enseignant/addformulaire";
+    }
+
+    @GetMapping("/")
+    public String home (){
+        return "redirect:/enseignant/user/index";
     }
 
 

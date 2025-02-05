@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="col-md-6 offset-3">
+        <form method="post" th:action="@{/maquette/admin/saveMaquette(page=${page},keyword=${keyword})}" class="">
+
+            <div>
+                <label>Code : </label>
+                <input class="form-control" type="text" name="code" th:value="${maquette.code}" />
+                <span class="text-danger" th:errors="${maquette.code}"></span>
+            </div>
+            <div>
+                <label>Nom : </label>
+                <input class="form-control" type="text" name="nom" th:value="${maquette.nom}" />
+                <span class="text-danger" th:errors="${maquette.nom}"></span>
+            </div>
+            <div>
+                <label>Classe : </label>
+                <select class="form-control" type="text" name="classeM" th:value="${classeM}">
+                    <option th:each="choix1 : ${classe1}"
+                            th:value="${choix1.id}"
+                            th:text="${choix1.nom}">
+                    </option>
+                </select>
+            </div>
+
+
+            <!--       <div>
+                       <label>Email : </label>
+                       <input class="form-control" type="email" name="email" th:value="${enseignant.email}" />
+                       <span class="text-danger" th:errors="${enseignant.email}"></span>
+                   </div>
+
+                   <div>
+                       <label>Score : </label>
+                       <input class="form-control" type="number" name="password" th:value="${enseignant.password}" />
+                       <span class="text-danger" th:errors="${enseignant.password}"></span>
+                   </div>-->
+
+            <div><button type="submit" class="btn btn-primary">Save</button></div>
+
+
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

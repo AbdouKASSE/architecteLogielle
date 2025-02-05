@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Patients</title>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+  <script src="/webjars/jquery/3.7.1/jquery.min.css"></script>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+<div layout:fragment="content" class="p=3 m=2">
+  <div class="card">
+    <button type="button" th:if="${#authorization.expression('hasRole(''ADMIN'')')}"><a class="btn btn-success" th:href="@{/emploisDuTp/admin/formEmploisDuTp}">Ajout EmploisDuTp</a></button>
+    <div class="card-header">Liste des EmploisDuTPs</div>
+    <div class="card-body">
+      <form method="get" th:action="@{/emploisDuTp/user/indexEmploisDuTp}">
+        <label>key word</label>
+        <input type="text" name="keyword" th:value="${keyword}" class="form-control d-inline w-auto">
+        <button type="submit" class="btn btn-primary">Recherche</button>
+      </form>
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th>ID</th><th>SEMESTRE</th><th>DATE DEBUT</th><th>DATE FIN</th><th>ANNEE</th><th>SEANCE</th><th th:if="${#authorization.expression('hasRole(''ADMIN'')')}">OPERATIONS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p:${listeEmploisDuTps}">
+          <td th:text="${p.id}"></td>
+          <td th:text="${p.semestre}"></td>
+          <td th:text="${p.dateDeb}"></td>
+          <td th:text="${p.dateFin}"></td>
+          <td th:text="${p.annee}"></td>
+          <td>
+            <a class="btn btn-info" th:href="@{/seance/user/indexSeance2(keyword=${p.id})}">
+              <i class="bi bi-eye"></i>
+            </a>
+          </td>
+          <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <a onclick="return confirm('Voulez vous réellement supprimer ?')" class="btn btn-danger"
+               th:href="@{/emploisDuTp/admin/deleteEmploisDuTp(id=${p.id},keyword=${keyword},page=${currentPage})}">
+              <i class="bi bi-trash"></i>
+            </a>
+            <a class="btn btn-success" th:href="@{/emploisDuTp/admin/editEmploisDuTp(id=${p.id},keyword=${keyword},page=${currentPage})}">
+              <i class="bi bi-pen"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <ul class="nav nav-pills">
+        <li th:each="page , status: ${pages}" class="nav-item">
+          <a th:class ="${status.index == currentPage} ? 'btn btn-primary ms-1' : 'btn btn-outline-primary ms-1'"
+             th:text="${status.index}"
+             th:href="@{/emploisDuTp/user/indexEmploisDuTp(page=${status.index}, keyword=${keyword})}">
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

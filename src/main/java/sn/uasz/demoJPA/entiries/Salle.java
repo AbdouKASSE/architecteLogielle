@@ -1,10 +1,11 @@
 package sn.uasz.demoJPA.entiries;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -16,7 +17,13 @@ public class Salle  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NonNull
+    @Size(min = 3,max = 8)
+    @Column(unique = true)
     private String nom;
     private int capacite;
     private String batiment;
+    @OneToMany(mappedBy = "seanceSA",fetch = FetchType.EAGER)
+    private List<Seance> seance =new ArrayList<>();
+
 }
