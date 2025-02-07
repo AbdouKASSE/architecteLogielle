@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            margin: 20px;
+        }
+
+
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="col-md-6 offset-3">
+            <h1>Bienvenue dans Notre Application</h1>
+            <img th:src="@{/images/Logo.jpg}" width="200" height="200" style="border-radius: 50%" alt="Aperçu de l'application">
+            <p>
+                Cette application permet de gérer efficacement un système d'enseignement<br>
+                en prenant en charge la gestion des enseignants,<br> des emplois du temps, des séances, des unités d'enseignement (UE), des éléments constitutifs (EC)<br>
+                et la répartition des enseignements entre les professeurs.
+            </p>
+            <footer>
+                &copy; 2025 - Mon Application
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

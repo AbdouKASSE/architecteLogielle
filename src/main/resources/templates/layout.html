@@ -13,14 +13,14 @@
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Logo</a>
+        <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/Logo.jpg}" width="50" height="50" style="border-radius: 50%"  alt="Ma belle image" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/enseignant/user/index}">Home</a>
+                    <a class="nav-link" th:href="@{/}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/seance/user/affiche}">Emplois Du Temps</a>
@@ -29,21 +29,21 @@
                     <a class="nav-link" th:href="@{/deroulement/user/indexDeroulement}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Deroulement</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" >Parametre</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" >Parametre</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/emploisDuTp/user/indexEmploisDuTp}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">emploisDuTp</a></li>
                         <li><a class="dropdown-item" th:href="@{/groupe/user/indexGroupe}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Groupe</a></li>
                         <li><a class="dropdown-item" th:href="@{/classe/user/indexClasse}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Classe</a></li>
                         <li><a class="dropdown-item" th:href="@{/salle/user/indexSalle}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Salle</a></li>
-                        <li><a class="dropdown-item" th:href="@{/choix/user/indexChoix}">Choix</a></li>
+                        <li><a class="dropdown-item" th:href="@{/choix/user/indexChoix}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Choix</a></li>
                         <li><a class="dropdown-item" th:href="@{/seance/user/indexSeance}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Seance</a></li>
                         <li><a class="dropdown-item" th:href="@{/enseignement/user/indexEnseignement}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Enseignement</a></li>
                         <li><a class="dropdown-item" th:href="@{/ec/user/indexEc}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">EC</a></li>
                         <li><a class="dropdown-item" th:href="@{/ue/user/indexUe}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">UE</a></li>
                         <li><a class="dropdown-item" th:href="@{/maquette/user/indexMaquette}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Maquette</a></li>
                         <li><a class="dropdown-item" th:href="@{/formation/user/indexFormation}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Formation</a></li>
-                        <li><a class="dropdown-item" th:href="@{/etudiant/user/indexEtudiant}">Etudiant</a></li>
-                        <li><a class="dropdown-item" th:href="@{/enseignant/user/index}">Enseigant</a></li>
+                        <li><a class="dropdown-item" th:href="@{/etudiant/user/indexEtudiant}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Etudiant</a></li>
+                        <li><a class="dropdown-item" th:href="@{/enseignant/user/index}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Enseigant</a></li>
                     </ul>
                 </li>
             </ul>

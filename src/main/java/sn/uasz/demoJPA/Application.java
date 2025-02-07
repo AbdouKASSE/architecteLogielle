@@ -271,7 +271,6 @@ public class Application implements CommandLineRunner {
             System.out.println(enseignant1.getEnseignants().getPrenom());
             System.out.println(enseignant1.getDate());
 
-
         });
 
     }

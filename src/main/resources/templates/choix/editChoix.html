@@ -40,7 +40,7 @@
             <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                 <label>Validation : </label>
                 <select class="form-control" type="text" name="validation" th:value="${choix.validation}">
-                    <option th:value="${01}" th:text="${0}"></option>
+                    <option th:value="${1}" th:text="${0}"></option>
                     <option th:value="${1}" th:text="${1}"></option>
                 </select>
             </div>

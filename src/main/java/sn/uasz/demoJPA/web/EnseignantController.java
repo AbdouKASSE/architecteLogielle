@@ -66,7 +66,7 @@ public class EnseignantController {
 
     @GetMapping("/")
     public String home (){
-        return "redirect:/enseignant/user/index";
+        return "index";
     }
 
 

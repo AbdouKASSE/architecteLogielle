@@ -1,6 +1,7 @@
 package sn.uasz.demoJPA.security;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,9 +17,8 @@ import sn.uasz.demoJPA.entiries.EC;
 
 @Controller
 public class SecurityController {
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     UserDetailsManager userDetailsManager;
     @GetMapping("/login")
     public String login(){
@@ -37,15 +37,34 @@ public class SecurityController {
     }
 
     @PostMapping(path = "/save")
-    public String save(String username,String password,String passwdC) {
-        PasswordEncoder passwordEncoder = passwordEncoder();
-        // Appeler le service pour enregistrer l'utilisateur
-        if (!password.equals(passwdC)) return "/inscrire";
-        UserDetails u1 = userDetailsManager.loadUserByUsername(username);
-        if(u1==null)
-            userDetailsManager.createUser(User.withUsername(username).password(passwordEncoder.encode(password)).roles("USER").build()
+    public String save(@RequestParam String username,
+                       @RequestParam String password,
+                       @RequestParam String passwdC) {
+        System.out.println("Tentative d'enregistrement pour l'utilisateur : " + username);
+        if (!password.equals(passwdC)) {
+            return "/inscrire"; // Retourne à la page d'inscription
+        }
+
+        // Vérifiez si l'utilisateur existe déjà
+        if (userDetailsManager.userExists(username)) {
+            System.out.println("L'utilisateur existe déjà : " + username);
+            return "/inscrire"; // L'utilisateur existe déjà
+        }
+
+        // Créez l'utilisateur dans la base de données
+        try {
+            userDetailsManager.createUser(
+                    User.withUsername(username)
+                            .password(passwordEncoder.encode(password))
+                            .roles("USER")
+                            .build()
             );
+            System.out.println("Utilisateur enregistré avec succès : " + username);
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'enregistrement : " + e.getMessage());
+            return "/inscrire";
+        }
+        // Redirigez vers la page de connexion
         return "redirect:/login";
     }
-
 }

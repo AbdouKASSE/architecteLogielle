@@ -9,81 +9,78 @@
             width: 100%;
             border-collapse: collapse;
         }
+        thead th {
+            background-color: #007BFF; /* Bleu */
+            color: white;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2; /* Gris clair */
+        }
+
+        tbody tr:hover {
+            background-color: #ddd; /* Gris foncé lors du survol */
+        }
         th, td {
             border: 1px solid #ccc;
             text-align: center;
             padding: 10px;
         }
         .CM {
-            background-color: #FFF895;
+            background-color: #808080;
         }
         .TD {
-            background-color: #FF3700B3;
+            background-color: #90EE90;
         }
         .TP {
-            background-color: #FF018786;
+            background-color: #FFD700;
         }
         .default {
             background-color: #eee;
         }
     </style>
-    <!--<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
-    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.js"></script>-->
 </head>
 <body>
 <div layout:fragment="content">
-<h1>Emploi du Temps</h1>
-    <div class="col-md-6">
-        <p>
-            <span th:text="${seance.seanceENG.ecEnseignement.ueEC.ueMaquette.classeM.niveau}">Pepper</span>
-            - <span th:text="${seance.seanceENG.ecEnseignement.ueEC.ueMaquette.classeM.nom}">Sebastian</span>
-            - <span th:text="${emplois.semestre}">Pepper</span>
-            - <span th:text="${emplois.annee}">Pepper</span>
+<h1 style="text-align: center;">Emploi du Temps</h1>
+    <div>
+        <p style="text-align: center;">
+            <span th:text="${seance.seanceENG.ecEnseignement.ueEC.ueMaquette.classeM.niveau}" style="font-weight: bold;"></span>
+            - <span th:text="${seance.seanceENG.ecEnseignement.ueEC.ueMaquette.classeM.nom}" style="font-weight: bold;"></span>
+            - <span th:text="${emplois.semestre}" style="font-weight: bold;"></span>
+            - <span th:text="${emplois.annee}" style="font-weight: bold;"></span>
         </p>
     </div>
     <table>
         <thead>
-        <tr>
-            <th>Nb Seance</th>
-            <th>LIBELLE</th>
-            <th>TYPE</th>
-            <th>HEURE DEB</th>
-            <th>HEURE FIN</th>
-            <th>SALLE</th>
-            <th>NOM PEOF</th>
-            <th>PRENOM PEOF</th>
-        </tr>
+            <tr>
+                <th scope="col">Heures</th>
+                <th scope="col">LIBELLE</th>
+                <th scope="col">TYPE</th>
+                <th scope="col">SALLE</th>
+                <th scope="col">ENSEIGANT</th>
+            </tr>
         </thead>
         <tbody>
         <tr th:each="ligne, iter : ${tableau}">
-            <td th:text="'Sean ' + ${iter.index + 1}"></td>
+            <td th:text="${ligne[0].heureDeb} + ' - ' + ${ligne[0].heureFin}"></td>
             <td th:each="cellule : ${ligne}"
-                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'"
-                th:text="${cellule.seanceENG != null ? cellule.seanceENG.libelle : 'Libre'}">
+                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'">
+                <span th:text="(${cellule.seanceENG != null ? cellule.seanceENG.libelle : 'Libre'})"></span><br>
             </td>
             <td th:each="cellule : ${ligne}"
-                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'"
-                th:text="${cellule.seanceENG != null ? cellule.seanceENG.type : 'Libre'}">
+                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'">
+                <span th:text="(${cellule.seanceENG != null ? cellule.seanceENG.type : 'Libre'})"></span><br>
             </td>
             <td th:each="cellule : ${ligne}"
-                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'"
-                th:text="${cellule.heureDeb}">
+                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'">
+                <span th:text="(${cellule.seanceSA != null ? cellule.seanceSA.nom : 'Libre'})"></span><br>
             </td>
             <td th:each="cellule : ${ligne}"
-                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'"
-                th:text="${cellule.heureFin}">
-            </td>
-            <td th:each="cellule : ${ligne}"
-                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'"
-                th:text="${cellule.seanceSA != null ? cellule.seanceSA.nom : 'Libre'}">
-            </td>
-            <td th:each="cellule : ${ligne}"
-                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'"
-                th:text="${cellule.seanceENG != null ? cellule.seanceENG.getChoix().get(0).enseignants.nom : 'Libre'}">
-            </td>
-            <td th:each="cellule : ${ligne}"
-                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'"
-                th:text="${cellule.seanceENG != null ? cellule.seanceENG.getChoix().get(0).enseignants.prenom : 'Libre'}">
+                th:classappend="${cellule.seanceENG != null} ? ${cellule.seanceENG.type} : 'default'">
+                <span th:text="(${cellule.seanceENG != null and cellule.seanceENG.getChoix() != null and cellule.seanceENG.getChoix().size() > 0 and cellule.seanceENG.getChoix().get(0).enseignants != null
+        ? cellule.seanceENG.getChoix().get(0).enseignants.nom + ' ' + cellule.seanceENG.getChoix().get(0).enseignants.prenom
+        : 'Libre'})"></span><br>
             </td>
 
         </tr>

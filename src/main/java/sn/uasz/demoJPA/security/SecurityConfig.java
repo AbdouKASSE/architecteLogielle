@@ -3,6 +3,7 @@ package sn.uasz.demoJPA.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,6 +41,7 @@ public class SecurityConfig {
                .formLogin(ar ->ar.loginPage("/login").defaultSuccessUrl("/").permitAll())
                .authorizeHttpRequests(arg ->arg
                        .requestMatchers("/webjars/**","/inscrire","/save").permitAll()
+                       .requestMatchers(HttpMethod.POST, "/save").permitAll()
                        .requestMatchers("/user/**").hasRole("USER")
                        .requestMatchers("/admin/**").hasRole("ADMIN")
                        .anyRequest().authenticated())
