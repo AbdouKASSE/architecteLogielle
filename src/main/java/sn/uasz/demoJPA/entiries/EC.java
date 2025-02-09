@@ -1,6 +1,7 @@
 package sn.uasz.demoJPA.entiries;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -16,11 +17,10 @@ public class EC {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  Long id;
-    @NonNull
+    @NotEmpty
     @Size(min = 4,max = 15)
-
     private String code;
-    @NonNull
+    @NotEmpty
     private String libelle;
     private int credit;
     private int coef;

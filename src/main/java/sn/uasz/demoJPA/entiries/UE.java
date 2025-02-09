@@ -1,6 +1,8 @@
 package sn.uasz.demoJPA.entiries;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -18,11 +20,13 @@ public class UE {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  Long id;
-    @NotNull
-    @Size(min = 4,max = 15)
+    @NotEmpty(message = "Le code ne doit pas être vide.")
+    @Size(min = 4, max = 15, message = "Le code doit comporter entre 4 et 15 caractères.")
     @Column(unique = true)
     private String code;
+    @NotEmpty(message = "Le libellé ne doit pas être vide.")
     private String libelle;
+
     private int credit;
     private int coef;
     private int cm;

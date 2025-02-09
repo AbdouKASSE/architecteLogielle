@@ -64,18 +64,18 @@ public class EcController {
         return "redirect:/ec/user/indexEc?page="+page+"&keyword="+ keyword;
     }
     @PostMapping(path = "/ec/admin/saveEc")
-    public String save(@Valid EC enseignant, BindingResult bindingResult,Model model,
+    public String save(@Valid EC ec, BindingResult bindingResult,Model model,
                        @RequestParam(defaultValue = "0")int page,
                        @RequestParam(defaultValue = "")String keyword
     ) {
         // Appeler le service pour enregistrer l'utilisateur
         if (bindingResult.hasErrors()){
             List<UE> ecs = ueRepository.findAll();
-            model.addAttribute("ec",new EC());
-            model.addAttribute("ues",ecs);
+            model.addAttribute("ec",ec);
+            model.addAttribute("ue",ecs);
             return "/ec/addformulaireEc";
         }
-        ecRepository.save(enseignant);
+        ecRepository.save(ec);
         return "redirect:/ec/user/indexEc?page="+page+"&keyword="+ keyword;
     }
     @RequestMapping(value = "/ec/admin/formEc",method = RequestMethod.GET)

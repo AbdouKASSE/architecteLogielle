@@ -15,8 +15,8 @@
         <form method="post" th:action="@{/ue/admin/saveUe(page=${page},keyword=${keyword})}" class="">
             <div>
                 <label>Code : </label>
-                <input class="form-control" type="text" name="code" th:value="${ue.code}" />
-                <span class="text-danger" th:errors="${ue.code}"></span>
+                <input class="form-control" type="text" th:field="*{ue.code}" />
+                <span class="text-danger" th:errors="*{ue.code}"></span>
             </div>
 
             <div>

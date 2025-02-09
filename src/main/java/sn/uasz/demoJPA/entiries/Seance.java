@@ -1,6 +1,7 @@
 package sn.uasz.demoJPA.entiries;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -16,12 +17,12 @@ public class Seance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NonNull
+    @NotEmpty
     @Column(unique = true)
     private String code;
-    @NonNull
+    @NotEmpty
     private String heureDeb;
-    @NonNull
+    @NotEmpty
     private String heureFin;
     @ManyToOne // Relation OneToOne
     @JoinColumn(name = "seanceENG")

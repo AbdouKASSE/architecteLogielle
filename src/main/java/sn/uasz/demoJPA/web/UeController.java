@@ -68,7 +68,7 @@ public class UeController {
         return "redirect:/ue/user/indexUe?page="+page+"&keyword="+ keyword;
     }
     @PostMapping(path = "/ue/admin/saveUe")
-    public String save(@Valid UE enseignant, BindingResult bindingResult,Model model,
+    public String save(@Valid UE ue, BindingResult bindingResult,Model model,
                        @RequestParam(defaultValue = "0")int page,
                        @RequestParam(defaultValue = "") String keyword
     ) {
@@ -76,9 +76,10 @@ public class UeController {
         if (bindingResult.hasErrors()){
             List<Maquette> enseignants =maquetteRepository.findAll();
             model.addAttribute("maquette",enseignants);
+            model.addAttribute("ue", ue);
             return "/ue/addUes";
         }
-        ueRepository.save(enseignant);
+        ueRepository.save(ue);
         return "redirect:/ue/user/indexUe?page="+page+"&keyword="+ keyword;
     }
 
